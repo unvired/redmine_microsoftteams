@@ -11,6 +11,8 @@ class Listener < Redmine::Hook::Listener
     return unless url
     return if issue.is_private?
 
+    return unless issue.priority.to_s == "Very High"
+
     title = "#{escape issue.project}"
     text = "#{escape issue.author} created [#{escape issue}](#{object_url issue}) #{mentions issue.description}"
 
@@ -32,6 +34,8 @@ class Listener < Redmine::Hook::Listener
     issue = context[:issue]
     journal = context[:journal]
     return if issue.is_private? || journal.private_notes?
+
+    return unless issue.priority.to_s == "Very High"
 
     url = url_for_project issue.project
     return unless url
